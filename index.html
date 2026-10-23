@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>אתגר אוצר מילים באנגלית</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6fb;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+    color:#2c3e50;
+}
+
+.words{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:30px;
+}
+
+.word{
+    background:#4a6cf7;
+    color:white;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:grab;
+}
+
+.blank{
+    display:inline-block;
+    min-width:130px;
+    min-height:35px;
+    border-bottom:3px solid #333;
+    text-align:center;
+    margin:0 4px;
+    vertical-align:middle;
+}
+
+.correct{
+    background:#b8f5b8;
+    border-radius:8px;
+}
+
+.wrong{
+    background:#ffbcbc;
+    border-radius:8px;
+}
+
+button{
+    margin-top:25px;
+    padding:12px 18px;
+    font-size:16px;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+    background:#4a6cf7;
+    color:white;
+}
+
+#score{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌍 השלמת מילים באנגלית</h1>
+
+<div class="words">
+
+<div class="word" draggable="true">Adventure</div>
+<div class="word" draggable="true">Photographer</div>
+<div class="word" draggable="true">Album</div>
+<div class="word" draggable="true">Amazing</div>
+<div class="word" draggable="true">Flight</div>
+<div class="word" draggable="true">Check</div>
+<div class="word" draggable="true">Passenger</div>
+<div class="word" draggable="true">Business</div>
+<div class="word" draggable="true">Degree</div>
+<div class="word" draggable="true">Communicate</div>
+<div class="word" draggable="true">Expect</div>
+<div class="word" draggable="true">Dessert</div>
+<div class="word" draggable="true">Equipment</div>
+<div class="word" draggable="true">Pain</div>
+
+</div>
+
+<p>
+בשבוע שעבר יצאתי ל
+<span class="blank" data-answer="Adventure"></span>
+גדול בדרום אמריקה.
+</p>
+
+<p>
+במהלך הטיול פגשתי
+<span class="blank" data-answer="Photographer"></span>
+מקצועי שצילם נופים מדהימים.
+</p>
+
+<p>
+בערב הוא הראה לי
+<span class="blank" data-answer="Album"></span>
+עם כל התמונות שלו.
+הן היו פשוט
+<span class="blank" data-answer="Amazing"></span>.
+</p>
+
+<p>
+למחרת עלינו על
+<span class="blank" data-answer="Flight"></span>
+למקום מרוחק.
+לפני שעלינו למטוס, הייתי צריך
+<span class="blank" data-answer="Check"></span>
+את הכרטיסים שלי.
+</p>
+
+<p>
+במטוס פגשתי
+<span class="blank" data-answer="Passenger"></span>
+נחמד שישב לידי.
+הוא סיפר לי שיש לו
+<span class="blank" data-answer="Business"></span>
+משלו.
+</p>
+
+<p>
+הוא למד באוניברסיטה וקיבל
+<span class="blank" data-answer="Degree"></span>
+בניהול עסקים.
+</p>
+
+<p>
+כשהגענו ליעד, הייתי צריך
+<span class="blank" data-answer="Communicate"></span>
+עם המדריך המקומי.
+</p>
+
+<p>
+המדריך אמר לנו
+<span class="blank" data-answer="Expect"></span>
+מזג אוויר חם במיוחד.
+</p>
+
+<p>
+בסוף הארוחה קיבלנו
+<span class="blank" data-answer="Dessert"></span>
+טעים מאוד.
+</p>
+
+<p>
+לפני שיצאנו למסלול ההליכה,
+בדקנו שכל ה
+<span class="blank" data-answer="Equipment"></span>
+שלנו ארוז כראוי.
+</p>
+
+<p>
+אחרי שעות רבות של הליכה
+הרגשתי
+<span class="blank" data-answer="Pain"></span>
+ברגליים.
+</p>
+
+<button onclick="checkAnswers()">בדוק תשובות</button>
+
+<div id="score"></div>
+
+</div>
+
+<script>
+
+let draggedWord = "";
+
+document.querySelectorAll(".word").forEach(word => {
+
+    word.addEventListener("dragstart", () => {
+        draggedWord = word.textContent;
+    });
+
+});
+
+document.querySelectorAll(".blank").forEach(blank => {
+
+    blank.addEventListener("dragover", e => {
+        e.preventDefault();
+    });
+
+    blank.addEventListener("drop", e => {
+        e.preventDefault();
+        blank.textContent = draggedWord;
+    });
+
+});
+
+function checkAnswers(){
+
+    let correct = 0;
+
+    document.querySelectorAll(".blank").forEach(blank => {
+
+        blank.classList.remove("correct","wrong");
+
+        if(blank.textContent === blank.dataset.answer){
+
+            blank.classList.add("correct");
+            correct++;
+
+        }else{
+
+            blank.classList.add("wrong");
+
+        }
+
+    });
+
+    document.getElementById("score").innerHTML =
+        `ציון: ${correct} מתוך 14`;
+
+}
+
+</script>
+
+</body>
+</html>
