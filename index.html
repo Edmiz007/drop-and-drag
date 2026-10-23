@@ -185,6 +185,10 @@ button{
 
 <button onclick="checkAnswers()">בדוק תשובות</button>
 
+<button onclick="resetQuiz()">
+🔄 נסה שוב
+</button>
+
 <div id="score"></div>
 
 </div>
@@ -203,14 +207,54 @@ document.querySelectorAll(".word").forEach(word => {
 
 document.querySelectorAll(".blank").forEach(blank => {
 
+    blank.addEventListener("dblclick",()=>{
+
+const word = blank.textContent;
+
+if(!word) return;
+
+const newWord =
+document.createElement("div");
+
+newWord.className = "word";
+newWord.draggable = true;
+newWord.textContent = word;
+
+newWord.addEventListener("dragstart",()=>{
+draggedWord = word;
+});
+
+document.querySelector(".words")
+.appendChild(newWord);
+
+blank.textContent = "";
+
+});
     blank.addEventListener("dragover", e => {
         e.preventDefault();
     });
 
-    blank.addEventListener("drop", e => {
-        e.preventDefault();
-        blank.textContent = draggedWord;
-    });
+   blank.addEventListener("drop", e => {
+
+e.preventDefault();
+
+if(blank.textContent !== "")
+return;
+
+blank.textContent = draggedWord;
+
+document.querySelectorAll(".word")
+.forEach(word=>{
+
+if(word.textContent === draggedWord){
+
+word.remove();
+
+}
+
+});
+
+});
 
 });
 
@@ -235,11 +279,52 @@ function checkAnswers(){
 
     });
 
-    document.getElementById("score").innerHTML =
-        `ציון: ${correct} מתוך 14`;
+let message = "";
+
+if(correct === 14){
+
+message = "🏆 מושלם! כל הכבוד!";
+
+}
+else if(correct >= 12){
+
+message = "🌟 מצוין! שליטה מעולה באוצר המילים.";
+
+}
+else if(correct >= 9){
+
+message = "👍 עבודה טובה! כדאי לחזור על כמה מילים.";
+
+}
+else{
+
+message = "📚 מומלץ לחזור על המילים ולנסות שוב.";
 
 }
 
+document.getElementById("score").innerHTML =
+`ציון: ${correct} מתוך 14<br><br>${message}`;
+
+}
+
+    function resetQuiz(){
+
+location.reload();
+
+}
+
+document.querySelectorAll(".blank").forEach(blank=>{
+
+blank.textContent="";
+blank.classList.remove("correct");
+blank.classList.remove("wrong");
+
+});
+
+document.getElementById("score").innerHTML="";
+
+}
+    
 </script>
 
 </body>
