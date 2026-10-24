@@ -307,21 +307,9 @@ document.getElementById("score").innerHTML =
 
 }
 
-    function resetQuiz(){
+function resetQuiz(){
 
 location.reload();
-
-}
-
-document.querySelectorAll(".blank").forEach(blank=>{
-
-blank.textContent="";
-blank.classList.remove("correct");
-blank.classList.remove("wrong");
-
-});
-
-document.getElementById("score").innerHTML="";
 
 }
     
