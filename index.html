@@ -45,18 +45,24 @@ h1{
 
 .blank{
     display:inline-flex;
+
     justify-content:center;
     align-items:center;
 
     min-width:130px;
-    min-height:45px;
+    min-height:55px;
+
+    background:#f0b3b3;
 
     border-bottom:3px solid #333;
 
     text-align:center;
+
     vertical-align:middle;
 
-    border-radius:8px;
+    line-height:1;
+
+    padding:0 10px;
 }
 
 .correct{
@@ -203,14 +209,20 @@ button{
 
 let draggedWord = "";
 
-const wordsContainer = document.querySelector(".words");
+window.addEventListener("load", () => {
 
-const words = Array.from(wordsContainer.children);
+    const wordsContainer =
+    document.querySelector(".words");
 
-words.sort(() => Math.random() - 0.5);
+    const words =
+    Array.from(wordsContainer.children);
 
-words.forEach(word => {
-    wordsContainer.appendChild(word);
+    words.sort(() => Math.random() - 0.5);
+
+    words.forEach(word => {
+        wordsContainer.appendChild(word);
+    });
+
 });
     
 document.querySelectorAll(".word").forEach(word => {
