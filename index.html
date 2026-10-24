@@ -44,13 +44,19 @@ h1{
 }
 
 .blank{
-    display:inline-block;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+
     min-width:130px;
-    min-height:35px;
+    min-height:45px;
+
     border-bottom:3px solid #333;
+
     text-align:center;
-    margin:0 4px;
     vertical-align:middle;
+
+    border-radius:8px;
 }
 
 .correct{
@@ -197,6 +203,16 @@ button{
 
 let draggedWord = "";
 
+const wordsContainer = document.querySelector(".words");
+
+const words = Array.from(wordsContainer.children);
+
+words.sort(() => Math.random() - 0.5);
+
+words.forEach(word => {
+    wordsContainer.appendChild(word);
+});
+    
 document.querySelectorAll(".word").forEach(word => {
 
     word.addEventListener("dragstart", () => {
